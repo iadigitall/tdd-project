@@ -93,12 +93,6 @@ class NewVisitorTest(LiveServerTestCase):
         self.assertIn('Comprar leite', page_text)
 
         # Satisfeitos, ambos vão dormir
- se o site vai lembrar da sua lista. Então, ela verifica que
-        # o site gerou uma URL única para ela -- existe uma explicação sobre essa feature
-
-        # Ela visita a URL: a sua lista TODO ainda está armazenada
-
-        # Satisfeita, ela vai dormir
 
     def wait_for_row_in_list_table(self, row_text):
         start_time = time.time()
