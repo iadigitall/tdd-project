@@ -1,15 +1,16 @@
 from django.shortcuts import redirect, render
-from lists.models import Item
+from lists.models import Item, List
 
 def home_page(request):
     return render(request, 'home.html')
 
 
-def view_list(request):
-    items = Item.objects.all()
-    return render(request, 'list.html', {'items': items})
+def view_list(request, list_id):
+    my_list = List.objects.get(id=list_id)
+    return render(request, 'list.html', {'list': my_list})
 
 
 def new_list(request):
-    Item.objects.create(text=request.POST['item_text'])
-    return redirect('/lists/the-only-list-in-the-world/')
+    my_list = List.objects.create()
+    Item.objects.create(text=request.POST['item_text'], list=my_list)
+    return redirect(f'/lists/{my_list.id}/')
