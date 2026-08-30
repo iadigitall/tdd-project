@@ -1,0 +1,15 @@
+Processo TDD (Test-Driven Development):
+
+O processo básico do TDD segue o ciclo: escrever um teste que falha, rodar o
+teste e confirmar que ele falha (estado vermelho), escrever o código mínimo
+da aplicação para o teste passar (estado verde), rodar o teste novamente, e
+repetir até que o teste passe. Depois de o teste passar, podemos refatorar o
+código para melhorá-lo, sempre rodando os testes para garantir que nada foi
+quebrado.
+
+Como trabalhamos com dois tipos de teste (Testes Funcionais e Testes de
+Unidade), o processo é ligeiramente mais complexo: o ciclo externo é guiado
+pelos Testes Funcionais (que representam a especificação do usuário) e, para
+fazer cada Teste Funcional passar, entramos em um ciclo interno de
+Testes de Unidade/Desenvolvimento, escrevendo e fazendo passar vários
+Testes de Unidade até que o Teste Funcional correspondente também passe.
