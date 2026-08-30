@@ -2,6 +2,11 @@ from django.test import LiveServerTestCase
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
+from selenium.common.exceptions import WebDriverException
+import time
+
+MAX_WAIT = 5
+
 
 class NewVisitorTest(LiveServerTestCase):
 
@@ -31,7 +36,7 @@ class NewVisitorTest(LiveServerTestCase):
         # Quando ela aperta enter, a página atualiza, e mostra a lista
         # "1: Estudar testes funcionais" como um item da lista TODO
         inputbox.send_keys(Keys.ENTER)
-        self.check_for_row_in_list_table('1: Estudar testes funcionais')
+        self.wait_for_row_in_list_table('1: Estudar testes funcionais')
 
         # Ainda existe uma caixa de texto convidando para adicionar outro item
         # Ela digita: "Estudar testes de unidade"
@@ -40,8 +45,8 @@ class NewVisitorTest(LiveServerTestCase):
         inputbox.send_keys(Keys.ENTER)
 
         # A página atualiza novamente, e agora mostra ambos os itens na sua lista
-        self.check_for_row_in_list_table('1: Estudar testes funcionais')
-        self.check_for_row_in_list_table('2: Estudar testes de unidade')
+        self.wait_for_row_in_list_table('1: Estudar testes funcionais')
+        self.wait_for_row_in_list_table('2: Estudar testes de unidade')
 
         # Maria se pergunta se o site vai lembrar da sua lista. Então, ela verifica que
         # o site gerou uma URL única para ela -- existe uma explicação sobre essa feature
@@ -50,7 +55,15 @@ class NewVisitorTest(LiveServerTestCase):
 
         # Satisfeita, ela vai dormir
 
-    def check_for_row_in_list_table(self, row_text):
-        table = self.browser.find_element(By.ID, 'id_list_table')
-        rows = table.find_elements(By.TAG_NAME, 'tr')
-        self.assertIn(row_text, [row.text for row in rows])
+    def wait_for_row_in_list_table(self, row_text):
+        start_time = time.time()
+        while True:
+            try:
+                table = self.browser.find_element(By.ID, 'id_list_table')
+                rows = table.find_elements(By.TAG_NAME, 'tr')
+                self.assertIn(row_text, [row.text for row in rows])
+                return
+            except (AssertionError, WebDriverException) as e:
+                if time.time() - start_time > MAX_WAIT:
+                    raise e
+                time.sleep(0.5)
