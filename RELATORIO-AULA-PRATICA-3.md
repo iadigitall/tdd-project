@@ -2,8 +2,8 @@
 
 ## Identificação
 
-- **Equipe:** Gustavo e Vitória
-- **Integrantes:** Gustavo e Vitória
+- **Equipe:** Gustavo
+- **Integrantes:** Gustavo
 - **Repositório Git:** https://github.com/iadigitall/tdd-project
 - **Data:** 09/09/2026
 
